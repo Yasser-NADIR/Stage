@@ -1,6 +1,5 @@
 <?php 
     require "Include/function.php";
-    require "Include/bd.php";
     if(!empty($_POST) ){
         $errors = array();
         if(empty($_POST["nom"]) or !preg_match("/^[a-zA-Z]+$/", $_POST["nom"])){
@@ -11,16 +10,16 @@
         }
         if(empty($_POST["email"]) or !filter_var(($_POST["email"]), FILTER_VALIDATE_EMAIL)){
             $errors["email"] = "email n'est pas valide";
-        }
+        }//test existanse
         if(empty($_POST["tel"]) or !preg_match("/^\+212[0-9]{9}|0[6-7][0-9]{8}$/", $_POST["tel"])){
             $errors["tel"] = "téléphone n'est pas valide";
         }
         if(empty($_POST["cin"])){
             $errors["cin"] = "cin n'est pas valide";
-        }
+        }//test existanse
         if(empty($_POST["code_massar"]) or !preg_match("/^[A-Z][0-9]{9}$/", $_POST["code_massar"])){
             $errors["code_massar"] = "code massar n'est pas valide";
-        }
+        }//test existanse
         if($_POST["etab"] == "0"){
             $errors["etab"] = "Choisi une établissement";
         }
@@ -33,23 +32,33 @@
         if(empty($_FILES["releve"]["name"])){
             $errors["releve"] = "choisi votre relevé de note";
         }else{
-            $name = $_FILES["releve"]["name"];
             $filePath = upload("releve");
         }
 
         if(empty($_POST["pseudo"]) or !preg_match("/^[a-zA-Z0-9_]+$/", $_POST["pseudo"])){
             $errors["pseudo"] = "pseudo n'est pas valide";
-        }
+        }//test existanse
         if(empty($_POST["password"]) or $_POST["password"] != $_POST["confirm_password"]){
             $errors["mot de passe"] = "mot de passe n'est pas valide";
         }
         if(empty($errors)){
+            $name = explode(".", $_FILES["releve"]["name"]);//split by "."
             $file = fopen($filePath, "r");
             $content = fread($file, filesize($filePath));
             fclose($file);
-            $req = $pdo->prepare("INSERT INTO t_biblio_binaire SET biblio_contenu=?, biblio_nom=?");
-            $req->execute([$file, $name]);
-            //$req = $pdo->prepare("INSERT INTO t_candidat SET nom_candidat=?, prenom_candidat=?, mail_candidat=?, tel_candidat=?,CIN_candidat=?,code_massar=?,id_etablissement=?,id_diplomt=?,note_s1=?,note_s2=?,note_s3=?,note_s4=?");
+            $req = $pdo->prepare("INSERT INTO t_biblio_binaire SET biblio_contenu=?, biblio_nom=?, biblio_extention=?");
+            $req->execute([$file, $name[0], $name[1]]);
+            $id_biblio = $pdo->lastInsertId();
+            $req = $pdo->prepare("INSERT INTO t_login SET pseudo=?, password=?, role=? ");
+            $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
+            $req->execute([$_POST["pseudo"], $password, 1]);//role 1: etudiant/ 2:prof
+            $id_login = $pdo->lastInsertId();
+            $req = $pdo->prepare("INSERT INTO t_candidat SET nom_candidat=?, prenom_candidat=?, mail_candidat=?, 
+                                tel_candidat=?,CIN_candidat=?,code_massar=?,id_etablissement=?,id_diplomt=?,
+                                note_s1=?,note_s2=?,note_s3=?,note_s4=?, releve_note=?, id_login=?");
+            $req->execute([$_POST["nom"], $_POST["prenom"], $_POST["email"], $_POST["tel"], $_POST["cin"],
+             $_POST["code_massar"], $_POST["etab"],$_POST["diplome"], $_POST["note1"], $_POST["note2"], 
+             $_POST["note3"], $_POST["note4"], $id_biblio, $id_login]);
         }
     }
 ?>
@@ -101,17 +110,26 @@
             <div class="form-group col-md-6">
                 <label for="">Etablissement</label>
                 <select name="etab" id="exampleSelect1" class="form-control">
-                    <option value="0">Selectionner une etablisement</option>
-                    <option value="1">FSTM</option>
-                    <option value="2">FSBinMsik</option>
+                <option value="0">Selectionner une etablisement</option>
+                    <?php
+                        $itabs = getItab();
+                        foreach($itabs as $itab):
+                    ?>
+                    <option value="<?= $itab[0]?>"><?= $itab[1]?></option>
+                    <?php endforeach ;?>
                 </select>
             </div>
             <div class="form-group col-md-6">
                 <label for="">diplime</label>
                 <select name="diplome" id="exampleSelect1" class="form-control">
                     <option value="0">Selectionner un diplome</option>
-                    <option value="1">DEUG</option>
-                    <option value="2">DEUST</option>
+                    <?php
+                        $itabs = getDiplomt();
+                        foreach($itabs as $itab):
+                    ?>
+                    <option value="<?= $itab[0]?>"><?= $itab[1]?></option>
+                    <?php endforeach ;?>
+                </select>
                 </select>
             </div>
         </div>

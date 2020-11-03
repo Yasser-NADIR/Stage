@@ -1,4 +1,5 @@
 <?php 
+    require_once "bd.php";
     function debug($var){
         var_dump($var);
     }
@@ -10,4 +11,14 @@
         return $upload_file;
     }
 
-   
+   function getItab(){
+       global $pdo;
+       $resultats = $pdo->query("SELECT * FROM t_etablissement")->fetchall();
+       return $resultats;
+   }
+
+   function getDiplomt(){
+        global $pdo;
+        $resultats = $pdo->query("SELECT * FROM t_diplomt")->fetchall();
+        return $resultats;
+    }
