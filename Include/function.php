@@ -1,5 +1,7 @@
 <?php 
     require_once "bd.php";
+    require_once "PHPMailer/PHPMailerAutoload.php";
+    
     function debug($var){
         var_dump($var);
     }
@@ -21,4 +23,27 @@
         global $pdo;
         $resultats = $pdo->query("SELECT * FROM t_diplomt")->fetchall();
         return $resultats;
+    }
+
+    function strRandom($length){
+        $alphabet = "abcdefghijklmnopqrstuvwxyzABSDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length);
+    }
+
+    function send($to, $subject="", $body=""){
+        $mail = new PHPMailer();
+        $mail->isSMTP();
+        $mail->SMTPAuth = true;
+        $mail->Host = "smtp.gmail.com";
+        $mail->Port = "587";
+        $mail->SMTPSecure = "tls";
+        $mail->Username = "azertytest333@gmail.com";
+        $mail->Password = "azerty@azerty";
+        $mail->isHTML();
+        $mail->setFrom("yassernadir761@gmail.com");
+        $mail->addAddress($to);
+        $mail->Subject = $subject;
+        $mail->Body = $body;
+        
+        return $mail->Send();
     }

@@ -1,3 +1,8 @@
+<?php 
+    if(session_status() == PHP_SESSION_NONE){
+        session_start();
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,9 +20,17 @@
                 <a href="register.php" class="nav-link active">S'inscrire</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link active">Se connecter</a>
+                <a href="login.php" class="nav-link active">Se connecter</a>
             </li>
         </ul>
     </div>
 </nav>
+<?php if(isset($_SESSION["flash"])):?>
+    <div class="container">
+    <?php foreach($_SESSION["flash"] as $type => $message):?>
+        <div class="alert alert-<?=$type;?> mt-2"><?=$message;?></div>
+    <?php endforeach;?>
+    </div>
+    <?php unset($_SESSION["flash"]) ?>
+<?php endif; ?>
 <div class="container">

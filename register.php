@@ -1,4 +1,5 @@
 <?php 
+    session_start();
     require "Include/function.php";
     if(!empty($_POST) ){
         $errors = array();
@@ -10,16 +11,41 @@
         }
         if(empty($_POST["email"]) or !filter_var(($_POST["email"]), FILTER_VALIDATE_EMAIL)){
             $errors["email"] = "email n'est pas valide";
-        }//test existanse
+        }else{
+            $req = $pdo->prepare("SELECT * FROM t_candidat WHERE mail_candidat=?");
+            $req->execute([$_POST["email"]]);
+            $user = $req->fetch();
+            if($user){
+                $errors["email"] = "cet email est déjà utililsé";
+            }
+        }
+
+
         if(empty($_POST["tel"]) or !preg_match("/^\+212[0-9]{9}|0[6-7][0-9]{8}$/", $_POST["tel"])){
             $errors["tel"] = "téléphone n'est pas valide";
         }
         if(empty($_POST["cin"])){
             $errors["cin"] = "cin n'est pas valide";
-        }//test existanse
+        }else{
+            $req = $pdo->prepare("SELECT * FROM t_candidat WHERE CIN_candidat =?");
+            $req->execute([$_POST["cin"]]);
+            $user = $req->fetch();
+            if($user){
+                $errors["cin"] = "ce cin est déjà utililsé";
+            }
+        }
+
         if(empty($_POST["code_massar"]) or !preg_match("/^[A-Z][0-9]{9}$/", $_POST["code_massar"])){
             $errors["code_massar"] = "code massar n'est pas valide";
-        }//test existanse
+        }else{
+            $req = $pdo->prepare("SELECT * FROM t_candidat WHERE code_massar =?");
+            $req->execute([$_POST["code_massar"]]);
+            $user = $req->fetch();
+            if($user){
+                $errors["code_massar"] = "ce code massar est déjà utililsé";
+            }
+        }
+
         if($_POST["etab"] == "0"){
             $errors["etab"] = "Choisi une établissement";
         }
@@ -37,7 +63,15 @@
 
         if(empty($_POST["pseudo"]) or !preg_match("/^[a-zA-Z0-9_]+$/", $_POST["pseudo"])){
             $errors["pseudo"] = "pseudo n'est pas valide";
-        }//test existanse
+        }else{
+            $req = $pdo->prepare("SELECT * FROM t_login WHERE pseudo=?");
+            $req->execute([$_POST["pseudo"]]);
+            $user = $req->fetch();
+            if($user){
+                $errors["pseudo"] = "ce pseudo n'est pas disponible";
+            }
+        }
+
         if(empty($_POST["password"]) or $_POST["password"] != $_POST["confirm_password"]){
             $errors["mot de passe"] = "mot de passe n'est pas valide";
         }
@@ -46,19 +80,30 @@
             $file = fopen($filePath, "r");
             $content = fread($file, filesize($filePath));
             fclose($file);
+            //sauvgarde fichier dans la base de donnée
             $req = $pdo->prepare("INSERT INTO t_biblio_binaire SET biblio_contenu=?, biblio_nom=?, biblio_extention=?");
             $req->execute([$file, $name[0], $name[1]]);
             $id_biblio = $pdo->lastInsertId();
-            $req = $pdo->prepare("INSERT INTO t_login SET pseudo=?, password=?, role=? ");
+            //sauvgarde login 
+            $req = $pdo->prepare("INSERT INTO t_login SET pseudo=?, password=?, role=?, confirmation_token=?");
             $password = password_hash($_POST["password"], PASSWORD_BCRYPT);
-            $req->execute([$_POST["pseudo"], $password, 1]);//role 1: etudiant/ 2:prof
+            $token = strRandom(60);
+            $req->execute([$_POST["pseudo"], $password, 1, $token]);//role 1: etudiant/ 2:prof
             $id_login = $pdo->lastInsertId();
+            //sauvgarde condidat
             $req = $pdo->prepare("INSERT INTO t_candidat SET nom_candidat=?, prenom_candidat=?, mail_candidat=?, 
                                 tel_candidat=?,CIN_candidat=?,code_massar=?,id_etablissement=?,id_diplomt=?,
                                 note_s1=?,note_s2=?,note_s3=?,note_s4=?, releve_note=?, id_login=?");
             $req->execute([$_POST["nom"], $_POST["prenom"], $_POST["email"], $_POST["tel"], $_POST["cin"],
              $_POST["code_massar"], $_POST["etab"],$_POST["diplome"], $_POST["note1"], $_POST["note2"], 
              $_POST["note3"], $_POST["note4"], $id_biblio, $id_login]);
+            //envoye d'email de confirmation
+            $url = "http://localhost/Stage/confirm.php?id=$id_login&token=$token";
+            send($_POST["email"], "Confirmation d'inscription", "Pour confirmer votre inscription, cliquer sur ce lien ".$url);
+            //message d'inscription
+            $_SESSION["flash"]["primary"] = "Un email de confirmation est envoyé";
+            header("Location: login.php");
+            exit();
         }
     }
 ?>
