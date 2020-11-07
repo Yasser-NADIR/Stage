@@ -13,15 +13,21 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary py-1">
-    <a href="#" class="navbar-brand mt-1"><h2>ENSET</h2></a>
+    <a href="index.php" class="navbar-brand mt-1"><h2>ENSET</h2></a>
     <div class="collapse navbar-collapse justify-content-end">
         <ul class="navbar-nav">
+        <?php if(isset($_SESSION["auth"])): ?>
+            <li class="nav-item">
+                <a href="desconnect.php" class="nav-link active">Se deconnecter</a>
+            </li>
+        <?php else: ?>
             <li class="nav-item">
                 <a href="register.php" class="nav-link active">S'inscrire</a>
             </li>
             <li class="nav-item">
                 <a href="login.php" class="nav-link active">Se connecter</a>
             </li>
+        <?php endif; ?>
         </ul>
     </div>
 </nav>

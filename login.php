@@ -1,6 +1,10 @@
 <?php 
     session_start();
     require_once "Include/bd.php";
+    if(isset($_SESSION["auth"])){
+        header("Location: profile.php");
+        die();
+    }
     if(!empty($_POST)){
         $errors = array();
         if(empty($_POST["pseudo"]) OR !preg_match("/^[a-zA-Z0-9]+$/", $_POST["pseudo"])){
@@ -47,7 +51,7 @@
             <div class="form-group row-cols-2">
                 <div class="mx-auto">
                     <label for="">Mot de passe:</label>
-                    <input type="text" name="password" id="" class="form-control">
+                    <input type="password" name="password" id="" class="form-control">
                 </div>
             </div>
             <div class="mx-auto">

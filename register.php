@@ -1,6 +1,10 @@
 <?php 
     session_start();
     require "Include/function.php";
+    if(isset($_SESSION["auth"])){
+        header("Location: profile.php");
+        die();
+    }
     if(!empty($_POST) ){
         $errors = array();
         if(empty($_POST["nom"]) or !preg_match("/^[a-zA-Z]+$/", $_POST["nom"])){
@@ -99,7 +103,7 @@
              $_POST["note3"], $_POST["note4"], $id_biblio, $id_login]);
             //envoye d'email de confirmation
             $url = "http://localhost/Stage/confirm.php?id=$id_login&token=$token";
-            send($_POST["email"], "Confirmation d'inscription", "Pour confirmer votre inscription, cliquer sur ce lien ".$url);
+            //send($_POST["email"], "Confirmation d'inscription", "Pour confirmer votre inscription, cliquer sur ce lien ".$url);
             //message d'inscription
             $_SESSION["flash"]["primary"] = "Un email de confirmation est envoyé";
             header("Location: login.php");
