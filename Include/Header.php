@@ -18,6 +18,9 @@
         <ul class="navbar-nav">
         <?php if(isset($_SESSION["auth"])): ?>
             <li class="nav-item">
+                <a href="editProfil.php" class="nav-link active">Mon profile</a>
+            </li>
+            <li class="nav-item">
                 <a href="desconnect.php" class="nav-link active">Se deconnecter</a>
             </li>
         <?php else: ?>
