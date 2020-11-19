@@ -24,6 +24,6 @@
 <?php if($role==1):?>
 <?php require_once "Include/profileCondidat.php";?>
 <?php else:?>
-
+<?php require_once "Include/profileResponsable.php";?>
 <?php endif;?>
 <?php require_once "Include/Footer.php";?>
