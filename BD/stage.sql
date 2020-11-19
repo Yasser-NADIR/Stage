@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  Dim 08 nov. 2020 à 23:40
+-- Généré le :  jeu. 19 nov. 2020 à 12:04
 -- Version du serveur :  10.1.28-MariaDB
 -- Version de PHP :  7.1.11
 
@@ -40,8 +40,8 @@ CREATE TABLE `t_biblio_binaire` (
 --
 
 INSERT INTO `t_biblio_binaire` (`id_biblio`, `biblio_contenu`, `biblio_nom`, `biblio_extention`) VALUES
-(30, 0x5265736f75726365206964202337000000000000, 'ASIO4ALL v2 Instruct', 'pdf'),
-(31, 0x5265736f75726365206964202337000000000000, 'ASIO4ALL v2 Instruct', 'pdf');
+(32, 0x5265736f75726365206964202337000000000000, 'dark-cosmic-jhin', 'jpg'),
+(33, 0x5265736f75726365206964202337000000000000, 'dark-cosmic-jhin', 'jpg');
 
 -- --------------------------------------------------------
 
@@ -72,8 +72,8 @@ CREATE TABLE `t_candidat` (
 --
 
 INSERT INTO `t_candidat` (`id_candidat`, `nom_candidat`, `prenom_candidat`, `mail_candidat`, `tel_candidat`, `CIN_candidat`, `code_massar`, `id_etablissement`, `id_diplomt`, `note_s1`, `note_s2`, `note_s3`, `note_s4`, `releve_note`, `id_login`) VALUES
-(19, 'yasser', 'nadir', 'yassernadir333@', '+212123456789', 'BB123123', 'R123123123', 1, 2, 12, 12.3, 12.3, 12.3, 30, 20),
-(20, 'NADR', 'Zainab', 'nadirzainab93@g', '0622691715', 'BB105205', 'R134825357', 2, 2, 12, 12.3, 12.3, 12.3, 31, 21);
+(3, 'NADIR', 'Zainab', 'yassernadir333@gmail.com', '0622691715', 'BB123123', 'R123123123', 1, 1, 12, 12.3, 12.3, 12.3, 32, 22),
+(4, 'NADIR', 'yasser', 'yassernadir761@gmail.com', '0622691715', 'BB105205', 'R012398745', 2, 2, 12, 12, 12.3, 12.3, 33, 23);
 
 -- --------------------------------------------------------
 
@@ -84,7 +84,8 @@ INSERT INTO `t_candidat` (`id_candidat`, `nom_candidat`, `prenom_candidat`, `mai
 CREATE TABLE `t_concours` (
   `id_concours` int(5) NOT NULL,
   `titre_concour` varchar(10) NOT NULL,
-  `concours_designation` varchar(4000) NOT NULL,
+  `concours_designation` varchar(400) CHARACTER SET latin7 NOT NULL,
+  `lien_module` varchar(255) DEFAULT NULL,
   `seuil` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -92,9 +93,13 @@ CREATE TABLE `t_concours` (
 -- Déchargement des données de la table `t_concours`
 --
 
-INSERT INTO `t_concours` (`id_concours`, `titre_concour`, `concours_designation`, `seuil`) VALUES
-(1, 'GLSID', 'Genie Logiciel ', 13),
-(2, 'BDCC', 'Big Data Could ', 13);
+INSERT INTO `t_concours` (`id_concours`, `titre_concour`, `concours_designation`, `lien_module`, `seuil`) VALUES
+(1, 'GLSID', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam nisi tincidunt dui placerat, quis bibendum dolor aliquet.', 'https://www.enset-media.ac.ma/formations/initiales/17776/modules', 13),
+(2, 'IIBCCC', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam nisi tincidunt dui placerat, quis bibendum dolor aliquet.', 'https://www.enset-media.ac.ma/formations/initiales/19559/modules', 13),
+(3, 'SEER', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam nisi tincidunt dui placerat, quis bibendum dolor aliquet.', 'https://www.enset-media.ac.ma/formations/initiales/17973/modules', 13),
+(4, 'GECSI', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam nisi tincidunt dui placerat, quis bibendum dolor aliquet.', 'https://www.enset-media.ac.ma/formations/initiales/19294/modules', 13),
+(5, 'GMSI', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam nisi tincidunt dui placerat, quis bibendum dolor aliquet.', 'https://www.enset-media.ac.ma/formations/initiales/19560/modules', 13),
+(6, 'GIL', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam nisi tincidunt dui placerat, quis bibendum dolor aliquet.', 'https://www.enset-media.ac.ma/formations/initiales/17659/modules', 13);
 
 -- --------------------------------------------------------
 
@@ -155,8 +160,15 @@ CREATE TABLE `t_liste_concour` (
   `id` int(11) NOT NULL,
   `id_concour` int(11) NOT NULL,
   `id_condidat` int(11) NOT NULL,
-  `date_concour` datetime NOT NULL
+  `date_concour` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `t_liste_concour`
+--
+
+INSERT INTO `t_liste_concour` (`id`, `id_concour`, `id_condidat`, `date_concour`) VALUES
+(14, 2, 4, NULL);
 
 -- --------------------------------------------------------
 
@@ -189,8 +201,9 @@ CREATE TABLE `t_login` (
 --
 
 INSERT INTO `t_login` (`id`, `pseudo`, `password`, `role`, `confirmation_token`, `confirmed_at`) VALUES
-(20, 'qrarzaer', '$2y$10$7.lArWQKXQu0LTUv5JKoguPJqnuuFnfFGjM0xG1HknJqTww724eYe', 1, 'ixWSRewHeoUQpH4HaVOTiSEgaqD3gVMNdKhB0xZ1PDdUW6AEIfkZFRIWdjpZ', NULL),
-(21, 'zainab', '$2y$10$G8gE4qGUwKNM1VjxmWUfKe9VFL.STbfEbjB9v2FGKDeisGq9PHrSy', 1, '9q1ptOLuX6SFgKgTi6MzwPaxyEVse0WQQL0TL6zqfvFjTdGsaFYqgMVxenW7', NULL);
+(22, 'zainab', '$2y$10$we/th5iaFbezVelChdL.O.x/KK7bA2JRk/h6FDGhv5PoJawkjGCtq', 1, 'lcX06zl8HYJupdoDXxNBnRxR6cT1gG9MiK6THwMpN1jeRR2B95lvIJm4yyhU', NULL),
+(23, 'yasser', '$2y$10$qfxXPYGx6sTGFcFLSJFOeufMBG7nRzr2rq.7SxPm0vL2OlWzrym6.', 1, '3ujgtevkj74LKOiiAKLSDpSrqYf5t5LNnkLBriUSgTblHrm5aB8JafdYqUQA', NULL),
+(24, 'tata', '$2y$10$hrf07bnnkkN7rr4MeJBv.OyucFPvYScP85ObEgzTebpWzcAw9nemC', 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -202,10 +215,17 @@ CREATE TABLE `t_responsable` (
   `id_responsable` int(5) NOT NULL,
   `responsable_nom` varchar(15) NOT NULL,
   `responsable_prenom` varchar(15) NOT NULL,
-  `responsable_mail` varchar(15) NOT NULL,
+  `responsable_mail` varchar(30) NOT NULL,
   `responsable_tel` varchar(15) NOT NULL,
   `id_login` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Déchargement des données de la table `t_responsable`
+--
+
+INSERT INTO `t_responsable` (`id_responsable`, `responsable_nom`, `responsable_prenom`, `responsable_mail`, `responsable_tel`, `id_login`) VALUES
+(2, 'NADIR', 'Yasser', 'yassernadir761@gmail.com', '0610065615', 24);
 
 --
 -- Index pour les tables déchargées
@@ -287,19 +307,19 @@ ALTER TABLE `t_responsable`
 -- AUTO_INCREMENT pour la table `t_biblio_binaire`
 --
 ALTER TABLE `t_biblio_binaire`
-  MODIFY `id_biblio` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id_biblio` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT pour la table `t_candidat`
 --
 ALTER TABLE `t_candidat`
-  MODIFY `id_candidat` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_candidat` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `t_concours`
 --
 ALTER TABLE `t_concours`
-  MODIFY `id_concours` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_concours` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `t_diplomt`
@@ -317,19 +337,19 @@ ALTER TABLE `t_etablissement`
 -- AUTO_INCREMENT pour la table `t_liste_concour`
 --
 ALTER TABLE `t_liste_concour`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `t_login`
 --
 ALTER TABLE `t_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT pour la table `t_responsable`
 --
 ALTER TABLE `t_responsable`
-  MODIFY `id_responsable` int(5) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_responsable` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Contraintes pour les tables déchargées
@@ -362,7 +382,7 @@ ALTER TABLE `t_liste_principale`
 -- Contraintes pour la table `t_responsable`
 --
 ALTER TABLE `t_responsable`
-  ADD CONSTRAINT `t_responsable_ibfk_1` FOREIGN KEY (`id_login`) REFERENCES `login` (`id_login`);
+  ADD CONSTRAINT `t_responsable_ibfk_1` FOREIGN KEY (`id_login`) REFERENCES `t_login` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
