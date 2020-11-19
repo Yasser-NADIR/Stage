@@ -23,9 +23,7 @@
                 $errors["email"] = "cet email est déjà utililsé";
             }
         }
-
-
-        if(empty($_POST["tel"]) or !preg_match("/^\+212[0-9]{9}|0[6-7][0-9]{8}$/", $_POST["tel"])){
+        if(empty($_POST["tel"]) or !preg_match("/^\+212(6|7)[0-9]{8}|0(6|7)[0-9]{8}$/", $_POST["tel"])){
             $errors["tel"] = "téléphone n'est pas valide";
         }
         if(empty($_POST["cin"])){
@@ -56,7 +54,7 @@
         if($_POST["diplome"] == "0"){
             $errors["diplome"] = "Choisi une diplome";
         }
-        if(!is_numeric($_POST["note1"])  or !is_numeric($_POST["note2"]) or !is_numeric($_POST["note3"]) or !is_numeric($_POST["note4"])){//
+        if(empty($_POST["note1"]) or empty($_POST["note2"]) or empty($_POST["note3"]) or empty($_POST["note4"]) or !is_numeric($_POST["note1"])  or !is_numeric($_POST["note2"]) or !is_numeric($_POST["note3"]) or !is_numeric($_POST["note4"])){//
             $errors["S"] = "les notes ne sont pas valide";
         }
         if(empty($_FILES["releve"]["name"])){
@@ -103,7 +101,7 @@
              $_POST["note3"], $_POST["note4"], $id_biblio, $id_login]);
             //envoye d'email de confirmation
             $url = "http://localhost/Stage/confirm.php?id=$id_login&token=$token";
-            //send($_POST["email"], "Confirmation d'inscription", "Pour confirmer votre inscription, cliquer sur ce lien ".$url);
+            send($_POST["email"], "Confirmation d'inscription", "Pour confirmer votre inscription, cliquer sur ce lien ".$url);
             //message d'inscription
             $_SESSION["flash"]["primary"] = "Un email de confirmation est envoyé";
             header("Location: login.php");
@@ -124,7 +122,7 @@
     </ul>
 <?php endif;?>
 <div class="container py-lg-5"> 
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data" >
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="">Nom</label>
@@ -169,7 +167,7 @@
                 </select>
             </div>
             <div class="form-group col-md-6">
-                <label for="">diplime</label>
+                <label for="">diplôme</label>
                 <select name="diplome" id="exampleSelect1" class="form-control">
                     <option value="0">Selectionner un diplome</option>
                     <?php
@@ -178,7 +176,6 @@
                     ?>
                     <option value="<?= $itab[0]?>"><?= $itab[1]?></option>
                     <?php endforeach ;?>
-                </select>
                 </select>
             </div>
         </div>
@@ -203,8 +200,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="">Relevé de note</label>
-            <input type="file" name="releve" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+            <label for="">Relevé de note <sub>(Sous forme d'une image)</sub></label>
+            <input type="file" name="releve" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" accept="image/*">
         </div>
         <hr class="my-4">
         <h2>Pour se connecter</h2>

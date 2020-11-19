@@ -23,7 +23,7 @@
         <?php $skip=false;foreach ($liste_concour as $element_concour):?>
             <?php if($element_concour[0] == $concours[$i]["id_concours"]):?>
                 <div class="mx-auto mb-1">
-                    <p class="alert alert-success my-0 p-2">vous êtes déjà inscrit</p>
+                    <p class="alert alert-success my-0 p-2">vous êtes inscrit</p>
                 </div>
             <?php $skip=true;
                 break;?>
@@ -53,7 +53,7 @@
         <?php $skip=false;foreach ($liste_concour as $element_concour):?>
             <?php if($element_concour[0] == $concours[$i]["id_concours"]):?>
                 <div class="mx-auto mb-1">
-                    <p class="alert alert-success my-0 p-2">vous êtes déjà inscrit</p>
+                    <p class="alert alert-success my-0 p-2">vous êtes inscrit</p>
                 </div>
             <?php $skip=true;
             break;
@@ -120,6 +120,3 @@
         </tr>
     </tbody>
 </table>
-<!--
-<h3>Pour mettre à jour votre profile <a href="update.php" class="btn btn-primary">clicker ici!!!</a></h3>
--->

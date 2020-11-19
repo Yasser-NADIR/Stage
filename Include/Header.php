@@ -18,7 +18,7 @@
         <ul class="navbar-nav">
         <?php if(isset($_SESSION["auth"])): ?>
             <li class="nav-item">
-                <a href="#" class="nav-link active">Mon profile</a><!--editProfil.php-->
+                <a href="http://localhost/stage/editProfil.php" class="nav-link active">Mon profile</a><!--editProfil.php-->
             </li>
             <li class="nav-item">
                 <a href="desconnect.php" class="nav-link active">Se deconnecter</a>
@@ -42,4 +42,4 @@
     </div>
     <?php unset($_SESSION["flash"]) ?>
 <?php endif; ?>
-<div class="container">
+<div class="container mb-5">
