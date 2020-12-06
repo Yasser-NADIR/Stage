@@ -47,3 +47,9 @@
         
         return $mail->Send();
     }
+
+    function triParMoyen($candidat1, $candidat2){
+        if($candidat1["m"]==$candidat2["m"]) return 0;
+        if($candidat1["m"]>$candidat2["m"]) return -1;
+        if($candidat1["m"]<$candidat2["m"]) return 1;
+    }
