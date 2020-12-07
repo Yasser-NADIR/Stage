@@ -3,6 +3,19 @@
     $req = $pdo->prepare("SELECT id_concour FROM t_liste_concour WHERE id_condidat=?");
     $req->execute([$_SESSION["user"]["id_candidat"]]);
     $liste_concour = $req->fetchall();
+    //les noms des concours que le candidat s'enregistre
+    $req = $pdo->prepare("SELECT * FROM t_concours WHERE id_concours in (SELECT id_concour from t_liste_concour WHERE id_condidat=:idCondidat) AND id_concours not in (SELECT id_concour from t_liste_candidat_concour) AND id_concours not in (SELECT id_concour from t_liste_candidat_concour WHERE id_condidat=:idCondidat)");
+    $req->execute(["idCondidat"=>$_SESSION["user"]["id_candidat"]]);
+    $liste_concour_enregistre = $req->fetchall();
+    //liste des condidats qui sont invité dans tous les concours sauf le condidat en question
+    $req = $pdo->prepare("SELECT titre_concour from t_concours WHERE id_concours in (SELECT id_concour FROM t_liste_candidat_concour WHERE id_concour not in (SELECT id_concour FROM t_liste_candidat_concour WHERE id_condidat=?))");
+    $req->execute([$_SESSION["user"]["id_candidat"]]);
+    $liste_concour_invite = $req->fetchall();
+    //liste du chaque concours pour le candidat
+    $req = $pdo->prepare("SELECT * FROM t_concours WHERE id_concours in (SELECT id_concour from t_liste_candidat_concour WHERE id_condidat=?)");
+    $req->execute([$_SESSION["user"]["id_candidat"]]);
+    $liste_concour_condidat_invite = $req->fetchall();
+
 ?>
 
 <h1 class="mb-5 mt-3"><span style="border-bottom: 3px solid black;">Bienvenue <?=$_SESSION["user"]["nom_candidat"];?> <?=$_SESSION["user"]["prenom_candidat"];?></span></h1>
@@ -39,9 +52,6 @@
 </div>
 <hr class="my-4">
 <h3>Préselectionement pour passé les concours</h3>
-<?php
-    $req = $pdo->prepare("SELECT *")
-?>
 <table class="table">
     <thead class="thead-dark">
             <tr>
@@ -50,18 +60,24 @@
             </tr>
     </thead>
     <tbody>
-        <tr class="table-warning">
-            <td>GLSID</td>
-            <td>En attent</td>
-        </tr>
-        <tr class="table-success">
-            <td>IIBDCC</td>
-            <td>Invité</td>
-        </tr>
-        <tr class="table-danger">
-            <td>GIL</td>
-            <td>N'est pas invité</td>
-        </tr>
+    <?php foreach($liste_concour_enregistre as $concour):?>
+            <tr class="table-warning">
+                <td><?=$concour["titre_concour"]?></td>
+                <td>en attent</td>
+            </tr>
+        <?php endforeach; ?>
+        <?php foreach($liste_concour_condidat_invite as $concour):?>
+            <tr class="table-success">
+                <td><?=$concour["titre_concour"]?></td>
+                <td>invité</td>
+            </tr>
+        <?php endforeach; ?>
+        <?php foreach($liste_concour_invite as $concour):?>
+            <tr class="table-danger">
+                <td><?=$concour["titre_concour"]?></td>
+                <td>pas invité</td>
+            </tr>
+        <?php endforeach; ?>
     </tbody>
 </table>
 <hr class="my-4">

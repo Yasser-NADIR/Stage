@@ -47,6 +47,7 @@
             <?php endforeach;?>
         </tbody>
     </table>
+    <hr>
 <div class="m-3">
     <a href="http://localhost/stage/selectListConcour.php" class="btn btn-primary">ajouter</a>
     <a href="http://localhost/stage/deleteCondidatCoucour.php" class="btn btn-primary">retirer</a>
