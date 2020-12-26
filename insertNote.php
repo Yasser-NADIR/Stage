@@ -25,6 +25,8 @@
         }
         
         if($is_good){
+            $nbrListePrincipale = intval($nbrListePrincipale);
+            $nbrListeAttente = intval($nbrListeAttente);
             $query = substr($query, 0, strlen($query)-1);
             $req = $pdo->prepare($query);
             $req->execute($list);
@@ -78,6 +80,7 @@
         <label for="" class="m-auto">Nombre du candidat dans liste: <input type="text" name="nbrListeAttente" id="" class="form-control"></label>
     </div>
     <button type="submit" class="btn btn-primary">inserer</button>
+    <a href="http://localhost/stage/principaleAttentList.php" class="btn btn-primary">retourner</a>
 </form>
 
 <?php require_once "Include/Footer.php" ?>
