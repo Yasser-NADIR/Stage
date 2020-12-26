@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  Dim 20 déc. 2020 à 17:40
+-- Généré le :  sam. 26 déc. 2020 à 15:09
 -- Version du serveur :  10.1.28-MariaDB
 -- Version de PHP :  7.1.11
 
@@ -236,6 +236,47 @@ INSERT INTO `t_login` (`id`, `pseudo`, `password`, `role`, `confirmation_token`,
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `t_nbr_principale_attente`
+--
+
+CREATE TABLE `t_nbr_principale_attente` (
+  `id` int(1) NOT NULL,
+  `nbrListePrincipale` int(3) NOT NULL,
+  `nbrListeAttente` int(3) NOT NULL,
+  `id_concour` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `t_nbr_principale_attente`
+--
+
+INSERT INTO `t_nbr_principale_attente` (`id`, `nbrListePrincipale`, `nbrListeAttente`, `id_concour`) VALUES
+(5, 2, 12, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `t_note_concour`
+--
+
+CREATE TABLE `t_note_concour` (
+  `id_note` int(6) NOT NULL,
+  `id_candidat` int(6) NOT NULL,
+  `note` float NOT NULL,
+  `id_concour` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `t_note_concour`
+--
+
+INSERT INTO `t_note_concour` (`id_note`, `id_candidat`, `note`, `id_concour`) VALUES
+(13, 3, 0, 1),
+(14, 4, 12.4, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `t_responsable`
 --
 
@@ -330,6 +371,21 @@ ALTER TABLE `t_login`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `t_nbr_principale_attente`
+--
+ALTER TABLE `t_nbr_principale_attente`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `t_nbr_principale_attente_ibfk_1` (`id_concour`);
+
+--
+-- Index pour la table `t_note_concour`
+--
+ALTER TABLE `t_note_concour`
+  ADD PRIMARY KEY (`id_note`),
+  ADD KEY `id_candidat` (`id_candidat`),
+  ADD KEY `id_concour` (`id_concour`);
+
+--
 -- Index pour la table `t_responsable`
 --
 ALTER TABLE `t_responsable`
@@ -390,6 +446,18 @@ ALTER TABLE `t_login`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
+-- AUTO_INCREMENT pour la table `t_nbr_principale_attente`
+--
+ALTER TABLE `t_nbr_principale_attente`
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT pour la table `t_note_concour`
+--
+ALTER TABLE `t_note_concour`
+  MODIFY `id_note` int(6) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
 -- AUTO_INCREMENT pour la table `t_responsable`
 --
 ALTER TABLE `t_responsable`
@@ -428,6 +496,19 @@ ALTER TABLE `t_liste_candidat_concour`
 ALTER TABLE `t_liste_principale`
   ADD CONSTRAINT `t_liste_principale_ibfk_1` FOREIGN KEY (`id_candidat`) REFERENCES `t_candidat` (`id_candidat`),
   ADD CONSTRAINT `t_liste_principale_ibfk_2` FOREIGN KEY (`id_concours`) REFERENCES `t_concours` (`id_concours`);
+
+--
+-- Contraintes pour la table `t_nbr_principale_attente`
+--
+ALTER TABLE `t_nbr_principale_attente`
+  ADD CONSTRAINT `t_nbr_principale_attente_ibfk_1` FOREIGN KEY (`id_concour`) REFERENCES `t_concours` (`id_concours`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `t_note_concour`
+--
+ALTER TABLE `t_note_concour`
+  ADD CONSTRAINT `t_note_concour_ibfk_1` FOREIGN KEY (`id_candidat`) REFERENCES `t_candidat` (`id_candidat`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `t_note_concour_ibfk_2` FOREIGN KEY (`id_concour`) REFERENCES `t_concours` (`id_concours`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `t_responsable`
