@@ -23,7 +23,7 @@
     <div class="d-flex justify-content-center">
         <a href="register.php" class="btn btn-outline-primary mx-4">S'inscrire</a>
         <div style="border: 1px solid black;transform: rotate(45deg);"></div>
-        <a href="login.php" class="btn btn-primary mx-4">Se connecter</a>
+        <a href="login.php" class="btn btn-outline-primary mx-4">Se connecter</a>
     </div>
 </div>
 <?php require "Include/Footer.php"?>
