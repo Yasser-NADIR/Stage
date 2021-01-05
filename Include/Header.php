@@ -23,13 +23,6 @@
             <li class="nav-item">
                 <a href="desconnect.php" class="nav-link active">Se deconnecter</a>
             </li>
-        <?php else: ?>
-            <li class="nav-item">
-                <a href="register.php" class="nav-link active">S'inscrire</a>
-            </li>
-            <li class="nav-item">
-                <a href="login.php" class="nav-link active">Se connecter</a>
-            </li>
         <?php endif; ?>
         </ul>
     </div>
