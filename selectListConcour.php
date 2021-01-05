@@ -24,6 +24,8 @@
         $query = substr($query, 0, strlen($query)-1);//pour supprimer le dernier "," ajouter
         $req = $pdo->prepare($query);
         $req->execute($liste_condidat_concour);
+        header("Location: finalList.php");
+        exit();
         
     }
 
