@@ -29,6 +29,33 @@
         }
     }
 ?>
+<style>
+    .box-form{
+        border: 1px solid black;
+        width: 30vw;
+        padding: 40px;
+        background: rgba(18, 123, 163, 0.1234);
+        border-radius: 5px;
+        margin: 7vw auto !important;
+        box-shadow: 5px 5px 5px black;
+        min-width: 350px;
+    }
+    form h1{
+        border-bottom: 2px dotted black;
+        width: min-content;
+        margin: auto;
+        padding-bottom: 5px;
+    }
+    .form-group input{
+        box-shadow: 1px 1px 2px black;
+    }
+    label{
+        font-size: 1.3em;
+    }
+    .form-group{
+        margin: 20px auto;
+    }
+</style>
 <?php $title = "Se connecter";
     require_once "Include/Header.php";?>
 <?php if(!empty($errors)):?>
@@ -38,24 +65,24 @@
         <?php endforeach;?>
     </ul>
 <?php endif;?>
-<div class="container mt-4">
+<div class="Xmx-auto Xmt-4 box-form">
     <form action="" method="post">
-        <div class="d-flex justify-content-center flex-column">
-            <h1 class="text-center">login:</h1>
-            <div class="form-group row-cols-2">
+        <div class="d-flex justify-content-center flex-column m-2">
+            <h1 class="text-center"><img src="Static/img/login2.png" alt=""> login:</h1>
+            <div class="form-group">
                 <div class="mx-auto">
                     <label for="">Peusdo:</label>
                     <input type="text" name="pseudo" id="" class="form-control">
                 </div>
             </div>
-            <div class="form-group row-cols-2">
+            <div class="form-group">
                 <div class="mx-auto">
                     <label for="">Mot de passe:</label>
                     <input type="password" name="password" id="" class="form-control">
                 </div>
             </div>
             <div class="mx-auto">
-                <button type="submit" class="btn btn-success">S'identifier</button>
+                <button type="submit" class="btn btn-primary">S'identifier</button>
             </div>
         </div>
     </form>
