@@ -109,6 +109,29 @@
         }
     }
 ?>
+<style>
+    .box-form{
+        border: 1px solid black;
+        padding: 40px;
+        background: rgba(18, 123, 163, 0.1234);
+        border-radius: 5px;
+        box-shadow: 5px 5px 5px black;
+        min-width: 360px;
+    }
+    form h1{
+        border-bottom: 2px dotted black;
+        width: min-content;
+        margin: auto;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    label{
+        font-size: 1.3em;
+    }
+    .form-group input{
+        box-shadow: 1px 1px 2px black;
+    }
+</style>
 <?php 
     $title = "S'inscrire";
     require "Include/Header.php";
@@ -121,8 +144,12 @@
         <?php endforeach;?>
     </ul>
 <?php endif;?>
+
 <div class="container py-lg-5"> 
+    <div class="box-form">
+    
     <form action="" method="post" enctype="multipart/form-data" >
+    <h1 class="text-center"><img src="Static/img/signup.png" alt=""> login:</h1>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="">Nom</label>
@@ -219,7 +246,9 @@
                 <input type="password" name="confirm_password" id="" class="form-control">
             </div>
         </div>
-        <button type="submit" class="btn btn-success">S'inscrire</button>
+        <button type="submit" class="btn btn-outline-primary">S'inscrire</button>
+        <a href="login.php" class="btn btn-outline-primary">Se connecter</a>
     </form>
+    </div>
 </div>
 <?php require "Include/Footer.php";?>
