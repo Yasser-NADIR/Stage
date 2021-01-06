@@ -65,10 +65,10 @@
         <?php endforeach;?>
     </ul>
 <?php endif;?>
-<div class="Xmx-auto Xmt-4 box-form">
+<div class="box-form">
     <form action="" method="post">
         <div class="d-flex justify-content-center flex-column m-2">
-            <h1 class="text-center"><img src="Static/img/login2.png" alt=""> login:</h1>
+            <h1 class="text-center"><img src="Static/img/login.png" alt=""> login:</h1>
             <div class="form-group">
                 <div class="mx-auto">
                     <label for="">Peusdo:</label>
@@ -82,7 +82,8 @@
                 </div>
             </div>
             <div class="mx-auto">
-                <button type="submit" class="btn btn-primary">S'identifier</button>
+                <button type="submit" class="btn btn-outline-primary">S'identifier</button>
+                <a href="register.php" class="btn btn-outline-primary">S'inscrire</a>
             </div>
         </div>
     </form>
