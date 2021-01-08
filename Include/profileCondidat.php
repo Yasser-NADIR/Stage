@@ -92,8 +92,18 @@
         $aucune_liste[$i] = $req->fetch()["titre_concour"];
     }
 ?>
+<style>
+    body{
+        background: rgba(18, 123, 163, 0.1234);
+    }
+</style>
 
-<h1 class="mb-5 mt-3"><span style="border-bottom: 3px solid black;">Bienvenue <?=$_SESSION["user"]["nom_candidat"];?> <?=$_SESSION["user"]["prenom_candidat"];?></span></h1>
+<?php /*<h1 class="mb-5 mt-3"><span style="border-bottom: 3px solid black;">Bienvenue <?=$_SESSION["user"]["nom_candidat"];?> <?=$_SESSION["user"]["prenom_candidat"];?></span></h1>*/?>
+<h1 class="mb-5 mt-3" style="text-align: center;">
+    <span style="border-bottom: 3px solid black;">
+        Bienvenue <?=$_SESSION["user"]["nom_candidat"];?> <?=$_SESSION["user"]["prenom_candidat"];?>
+    </span>
+</h1>
 <h2 class="text-center text-light bg-warning mb-5" style="border-radius: 5px;">Inscrire dans un concour</h3>
 <div class="container row justify-content-around">
     <?php for($i=0; $i<6; $i++): ?>
@@ -158,9 +168,6 @@
                 <td>invité</td>
             </tr>
         <?php endforeach; ?>
-        <?php var_dump($liste_concour_invite);
-            echo $_SESSION["user"]["id_candidat"];
-        ?>
         <?php foreach($liste_concour_invite as $concour):?>
             <tr class="table-danger">
                 <td><?=$concour["titre_concour"]?></td>
@@ -188,13 +195,13 @@
         <?php foreach($liste_concour_principale as $concour):?>
         <tr class="table-success">
             <td><?=$concour?></td>
-            <td>Liste Principale<a href="#" class="btn btn-info mx-2">voir la liste</a></td>
+            <td>Liste Principale</td>
         </tr>
         <?php endforeach; ?>
         <?php foreach($liste_concour_attente as $concour): ?>
         <tr class="table-secondary">
             <td><?=$concour?></td>
-            <td>Liste d'attente<a href="#" class="btn btn-info mx-2">voir la liste</a></td>
+            <td>Liste d'attente</td>
         </tr>
         <?php endforeach; ?>
         <?php foreach($aucune_liste as $concour):?>
