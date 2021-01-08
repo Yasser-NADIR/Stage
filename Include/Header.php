@@ -17,6 +17,11 @@
             padding-left: 10px;
             font-size: 2em;
         }
+        .desconnection{
+            border: 1px solid white;
+            border-radius: 5px;
+            font-size: 1.3em;
+        }
     </style>
 </head>
 <body>
@@ -26,7 +31,7 @@
         <ul class="navbar-nav">
         <?php if(isset($_SESSION["auth"])): ?>
             <li class="nav-item">
-                <a href="desconnect.php" class="nav-link active">Se deconnecter</a>
+                <a href="desconnect.php" class="nav-link active desconnection">Se deconnecter</a>
             </li>
         <?php endif; ?>
         </ul>
