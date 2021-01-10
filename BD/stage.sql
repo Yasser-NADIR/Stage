@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  sam. 26 déc. 2020 à 15:09
+-- Généré le :  Dim 10 jan. 2021 à 10:53
 -- Version du serveur :  10.1.28-MariaDB
 -- Version de PHP :  7.1.11
 
@@ -42,7 +42,9 @@ CREATE TABLE `t_biblio_binaire` (
 INSERT INTO `t_biblio_binaire` (`id_biblio`, `biblio_contenu`, `biblio_nom`, `biblio_extention`) VALUES
 (32, 0x5265736f75726365206964202337000000000000, 'dark-cosmic-jhin', 'jpg'),
 (33, 0x5265736f75726365206964202337000000000000, 'dark-cosmic-jhin', 'jpg'),
-(34, 0x5265736f75726365206964202337000000000000, 'dark-cosmic-jhin', 'jpg');
+(34, 0x5265736f75726365206964202337000000000000, 'dark-cosmic-jhin', 'jpg'),
+(35, 0x5265736f75726365206964202337000000000000, 'dark-cosmic-jhin', 'jpg'),
+(36, 0x5265736f75726365206964202337000000000000, 'dark-cosmic-jhin', 'jpg');
 
 -- --------------------------------------------------------
 
@@ -75,7 +77,9 @@ CREATE TABLE `t_candidat` (
 INSERT INTO `t_candidat` (`id_candidat`, `nom_candidat`, `prenom_candidat`, `mail_candidat`, `tel_candidat`, `CIN_candidat`, `code_massar`, `id_etablissement`, `id_diplomt`, `note_s1`, `note_s2`, `note_s3`, `note_s4`, `releve_note`, `id_login`) VALUES
 (3, 'NADIR', 'Zainab', 'yassernadir333@gmail.com', '0622691715', 'BB123123', 'R123123123', 1, 1, 12, 12.3, 12.3, 12.3, 32, 22),
 (4, 'NADIR', 'yasser', 'yassernadir761@gmail.com', '0622691715', 'BB105205', 'R012398745', 2, 2, 14, 14, 14, 14, 33, 23),
-(5, 'Kaci', 'Oussama', 'yasser@dude.com', '0610065615', 'BB1231234', 'K765678789', 1, 2, 19, 12.3, 13, 9, 34, 25);
+(5, 'Kaci', 'Oussama', 'yasser@dude.com', '0610065615', 'BB1231234', 'K765678789', 1, 2, 19, 12.3, 13, 9, 34, 25),
+(6, 'user', 'A', 'user1@gmail.com', '0611111111', 'A111', 'A111111111', 1, 1, 12, 12.3, 10, 12.33, 35, 26),
+(7, 'user', 'AA', 'user2@gmail.com', '0611111111', 'A112', 'A111111112', 1, 1, 12.2, 12.5, 12.3, 12.3, 36, 27);
 
 -- --------------------------------------------------------
 
@@ -169,7 +173,6 @@ CREATE TABLE `t_liste_candidat_concour` (
 --
 
 INSERT INTO `t_liste_candidat_concour` (`id`, `id_concour`, `id_condidat`) VALUES
-(8, 1, 4),
 (9, 1, 3);
 
 -- --------------------------------------------------------
@@ -231,7 +234,10 @@ INSERT INTO `t_login` (`id`, `pseudo`, `password`, `role`, `confirmation_token`,
 (22, 'zainab', '$2y$10$we/th5iaFbezVelChdL.O.x/KK7bA2JRk/h6FDGhv5PoJawkjGCtq', 1, 'lcX06zl8HYJupdoDXxNBnRxR6cT1gG9MiK6THwMpN1jeRR2B95lvIJm4yyhU', NULL),
 (23, 'yasser', '$2y$10$qfxXPYGx6sTGFcFLSJFOeufMBG7nRzr2rq.7SxPm0vL2OlWzrym6.', 1, '3ujgtevkj74LKOiiAKLSDpSrqYf5t5LNnkLBriUSgTblHrm5aB8JafdYqUQA', NULL),
 (24, 'tata', '$2y$10$hrf07bnnkkN7rr4MeJBv.OyucFPvYScP85ObEgzTebpWzcAw9nemC', 2, NULL, NULL),
-(25, 'oussama', '$2y$10$03/FrPbhGPeLCdcMCqFl/..2YhUlnnBM19/YTPqQAgL5ok7fvlzIm', 1, 'hHaw0q5S2ySRa4uVkqrSQKA9mosE6RLXHyigX53pqezD6EYxgv2vaVrjwGKS', NULL);
+(25, 'oussama', '$2y$10$03/FrPbhGPeLCdcMCqFl/..2YhUlnnBM19/YTPqQAgL5ok7fvlzIm', 1, 'hHaw0q5S2ySRa4uVkqrSQKA9mosE6RLXHyigX53pqezD6EYxgv2vaVrjwGKS', NULL),
+(26, 'user1', '$2y$10$N4B4sHXdQE7XEOFZIco71.uque0WLGEpg643dS50VvrXj5fR9xdA.', 1, 'IaE29rxqRPWEbtiD03c6MYU3kniZ40jhlbjMNFXrcQSGE3Gwx87uvzFKZWro', NULL),
+(27, 'user2', '$2y$10$iVn/i6ojc..GNs.sMf3kcunMwBcvfS58.dy1oVCxNv2TjzV8HVvP2', 1, 'vRU7vFxkjR1c0lIbro5hRTmfFKNNKX7FJwDyuYRDvgWr0l6B52SUSrSyWyYy', NULL),
+(28, 'toto', '$2y$10$ItsKvZ4KD0gO2jnxAdujTOjvRlyC76tUI2gZDipV3ZkDLnTGIz9yi', 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -251,7 +257,7 @@ CREATE TABLE `t_nbr_principale_attente` (
 --
 
 INSERT INTO `t_nbr_principale_attente` (`id`, `nbrListePrincipale`, `nbrListeAttente`, `id_concour`) VALUES
-(5, 2, 12, 1);
+(5, 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -295,7 +301,8 @@ CREATE TABLE `t_responsable` (
 --
 
 INSERT INTO `t_responsable` (`id_responsable`, `responsable_nom`, `responsable_prenom`, `responsable_mail`, `responsable_tel`, `id_login`, `id_concour`) VALUES
-(2, 'NADIR', 'Yasser', 'yassernadir761@gmail.com', '0610065615', 24, 1);
+(2, 'NADIR', 'Yasser', 'yassernadir761@gmail.com', '0610065615', 24, 1),
+(3, 'nadir', 'zainab', 'nadirzainab@gmail.com', '0611111111', 28, 2);
 
 --
 -- Index pour les tables déchargées
@@ -401,13 +408,13 @@ ALTER TABLE `t_responsable`
 -- AUTO_INCREMENT pour la table `t_biblio_binaire`
 --
 ALTER TABLE `t_biblio_binaire`
-  MODIFY `id_biblio` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id_biblio` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT pour la table `t_candidat`
 --
 ALTER TABLE `t_candidat`
-  MODIFY `id_candidat` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_candidat` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `t_concours`
@@ -443,7 +450,7 @@ ALTER TABLE `t_liste_concour`
 -- AUTO_INCREMENT pour la table `t_login`
 --
 ALTER TABLE `t_login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT pour la table `t_nbr_principale_attente`
@@ -461,7 +468,7 @@ ALTER TABLE `t_note_concour`
 -- AUTO_INCREMENT pour la table `t_responsable`
 --
 ALTER TABLE `t_responsable`
-  MODIFY `id_responsable` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_responsable` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Contraintes pour les tables déchargées
