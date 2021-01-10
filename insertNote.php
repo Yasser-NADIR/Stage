@@ -1,5 +1,7 @@
 <?php
     session_start();
+    require_once "Include/function.php";
+    verifyAdmin();
     require_once "Include/bd.php";
     $id_concour = $_SESSION["user"]["id_concour"];
     if(!empty($_POST) && !in_array("", $_POST)){

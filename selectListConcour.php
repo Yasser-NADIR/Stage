@@ -1,18 +1,9 @@
 <?php 
     session_start();
-    if(!isset($_SESSION["auth"])){
-        $_SESSION["flash"]["danger"] = "il te faut s'identifier";
-        header("Location: login.php");
-        exit();
-    }
-    if($_SESSION["auth"]["role"]!=2){
-        $_SESSION["flash"]["danger"] = "tu as pas le droit d'entrer icic";
-        header("Location: profile.php");
-        exit();
-    }
+    require_once "Include/function.php";
+    verifyAdmin();
 
     require_once "Include/bd.php";
-    require_once "Include/function.php";
     $id_concour = $_SESSION["user"]["id_concour"];
     if(!empty($_POST)){
         $query = "INSERT INTO t_liste_candidat_concour(id_concour,id_condidat) VALUES ";
@@ -43,6 +34,11 @@
     $title = "liste concour";
     require_once "Include/Header.php";
 ?>
+<style>
+    body{
+        background: rgba(18, 123, 163, 0.1234);
+    }
+</style>
 <h1 class="my-3" style="text-align: center;">Selectionner des candidats pour passer ce concour</h1>
 <?php if(empty($liste)):?>
     <div class="alert alert-warning"><h2 class="m-0" style="text-align: center;">Il n'y a plus du candidat à selectionner</h2></div>
@@ -72,12 +68,12 @@
             <?php endforeach;?>
         </tbody>
     </table>
-    <button type="submit" class="btn btn-success mt-3">Ajouter</button>
+    <button type="submit" class="btn btn-outline-success mt-3">Ajouter</button>
 </form>
 <hr>
-<div class="my-3">
-    <a href="http://localhost/stage/deleteCondidatCoucour.php" class="btn btn-primary">retirer</a>
-    <a href="http://localhost/stage/finalList.php" class="btn btn-primary">la liste finale</a>
-    <a href="http://localhost/stage/profile.php" class="btn btn-primary">retourner au profile</a>
+<div class="my-3 d-flex justify-content-center">
+    <a href="http://localhost/stage/deleteCondidatCoucour.php" class="btn btn-outline-primary mx-3">retirer</a>
+    <a href="http://localhost/stage/finalList.php" class="btn btn-outline-primary mx-3">la liste finale</a>
+    <a href="http://localhost/stage/profile.php" class="btn btn-outline-primary mx-3">retourner au profile</a>
 </div>
 <?php include_once "Include/Footer.php"?>

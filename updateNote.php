@@ -1,5 +1,7 @@
 <?php 
     session_start();
+    require_once "Include/function.php";
+    verifyAdmin();
     require_once "Include/bd.php";
     $id_concour = $_SESSION["user"]["id_concour"];
     if(!empty($_POST) && !in_array("", $_POST)){
@@ -57,6 +59,12 @@
     require_once "Include/Header.php";
 ?>
 
+<style>
+    body{
+        background: rgba(18, 123, 163, 0.1234);
+    }
+</style>
+
 <h2 class="m-3" style="text-align: center;"><span style="border-bottom:3px solid black;">Mettre à jour les notes</span></h2>
 <form action="" method="post">
     <table class="table"  style="text-align: center;">
@@ -83,8 +91,10 @@
         <label for="" class="m-auto">Nombre du candidat dans liste pricipale: <input type="text" name="nbrListePrincipale" id="" value="<?=$nbr_principale_attente["nbrListePrincipale"]?>" class="form-control"></label>
         <label for="" class="m-auto">Nombre du candidat dans liste: <input type="text" name="nbrListeAttente" id="" value="<?=$nbr_principale_attente["nbrListeAttente"]?>" class="form-control"></label>
     </div>
-    <button type="submit" class="btn btn-primary">update</button>
-    <a href="http://localhost/stage/principaleAttentList.php" class="btn btn-primary">retourner</a>
+    <div class="d-flex justify-content-center">
+        <button type="submit" class="btn btn-outline-primary mx-3">update</button>
+        <a href="http://localhost/stage/principaleAttentList.php" class="btn btn-outline-primary mx-3">retourner</a>
+    </div>
 </form>
 
 <?php require_once "Include/Footer.php"?>

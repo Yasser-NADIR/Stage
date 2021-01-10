@@ -1,18 +1,9 @@
 <?php 
     session_start();
-    if(!isset($_SESSION["auth"])){
-        $_SESSION["flash"]["danger"] = "il te faut s'identifier";
-        header("Location: login.php");
-        exit();
-    }
-    if($_SESSION["auth"]["role"]!=2){
-        $_SESSION["flash"]["danger"] = "tu as pas le droit d'entrer icic";
-        header("Location: profile.php");
-        exit();
-    }
+    require_once "Include/function.php";
+    verifyAdmin();
 
     require_once "Include/bd.php";
-    require_once "Include/function.php";
     $id_concour = $_SESSION["user"]["id_concour"];
     $req = $pdo->prepare("SELECT * FROM t_candidat WHERE id_candidat in( SELECT id_condidat FROM t_liste_candidat_concour WHERE id_concour=:idConcour) ");
     $req->execute(["idConcour"=>$id_concour]);
@@ -26,6 +17,11 @@
     $title = "liste concour";
     require_once "Include/Header.php";
 ?>
+<style>
+    body{
+        background: rgba(18, 123, 163, 0.1234);
+    }
+</style>
 <h1 class="my-3" style="text-align: center;">Affichage des candidats inviter au concour</h1>
 <table class="table">
         <thead class="table-light">
@@ -48,9 +44,9 @@
         </tbody>
     </table>
     <hr>
-<div class="m-3">
-    <a href="http://localhost/stage/selectListConcour.php" class="btn btn-primary">ajouter</a>
-    <a href="http://localhost/stage/deleteCondidatCoucour.php" class="btn btn-primary">retirer</a>
-    <a href="http://localhost/stage/profile.php" class="btn btn-primary">retourner au profile</a>
+<div class="m-3 d-flex justify-content-center">
+    <a href="http://localhost/stage/selectListConcour.php" class="btn btn-outline-primary  mx-3">ajouter</a>
+    <a href="http://localhost/stage/deleteCondidatCoucour.php" class="btn btn-outline-primary  mx-3">retirer</a>
+    <a href="http://localhost/stage/profile.php" class="btn btn-outline-primary  mx-3">retourner au profile</a>
 </div>
 <?php include_once "Include/Footer.php"?>

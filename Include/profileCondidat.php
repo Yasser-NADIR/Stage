@@ -92,11 +92,6 @@
         $aucune_liste[$i] = $req->fetch()["titre_concour"];
     }
 ?>
-<style>
-    body{
-        background: rgba(18, 123, 163, 0.1234);
-    }
-</style>
 
 <?php /*<h1 class="mb-5 mt-3"><span style="border-bottom: 3px solid black;">Bienvenue <?=$_SESSION["user"]["nom_candidat"];?> <?=$_SESSION["user"]["prenom_candidat"];?></span></h1>*/?>
 <h1 class="mb-5 mt-3" style="text-align: center;">

@@ -53,3 +53,16 @@
         if($candidat1["m"]>$candidat2["m"]) return -1;
         if($candidat1["m"]<$candidat2["m"]) return 1;
     }
+
+    function verifyAdmin(){
+        if(!isset($_SESSION["auth"])){
+            $_SESSION["flash"]["danger"] = "il te faut s'identifier";
+            header("Location: login.php");
+            exit();
+        }
+        if($_SESSION["auth"]["role"]!=2){
+            $_SESSION["flash"]["danger"] = "tu as pas le droit d'entrer icic";
+            header("Location: profile.php");
+            exit();
+        }
+    }

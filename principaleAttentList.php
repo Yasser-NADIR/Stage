@@ -50,6 +50,12 @@
     }
 ?>
 
+<style>
+    body{
+        background: rgba(18, 123, 163, 0.1234);
+    }
+</style>
+
 <h2 class="m-3" style="text-align: center;">La liste principale</h2>
 <table class="table">
     <thead>
@@ -87,7 +93,9 @@
     </tbody>
 </table>
 <hr>
-<a href="http://localhost/stage/updateNote.php" class="btn btn-primary">mettre à jour les notes</a>
-<a href="http://localhost/stage/insertNote.php" class="btn btn-primary <?=$display?>" >inserer les notes</a>
-<a href="http://localhost/stage/profile.php" class="btn btn-primary">retourner au profile</a>
+<div class="d-flex justify-content-center">
+    <a href="http://localhost/stage/updateNote.php" class="btn btn-outline-primary mx-3">mettre à jour les notes</a>
+    <a href="http://localhost/stage/insertNote.php" class="btn btn-outline-primary mx-3 <?=$display?>" >inserer les notes</a>
+    <a href="http://localhost/stage/profile.php" class="btn btn-outline-primary mx-3">retourner au profile</a>
+</div>
 <?php require_once "Include/Footer.php";?>

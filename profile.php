@@ -19,8 +19,16 @@
     $_SESSION["user"] = $user;
 ?>
 
+
+
 <?php $title = "profile";
     require_once "Include/Header.php";?>
+
+<style>
+    body{
+        background: rgba(18, 123, 163, 0.1234);
+    }
+</style>
 <?php if($role==1):?>
 <?php require_once "Include/profileCondidat.php";?>
 <?php else:?>
